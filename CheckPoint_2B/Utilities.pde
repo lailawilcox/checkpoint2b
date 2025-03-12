@@ -6,3 +6,9 @@ void click() {
     wasPressed = false;
   }
 }
+
+void keyReleased() {
+  if (key == ' ') {
+    on = !on;
+  }
+}

@@ -1,18 +1,31 @@
 class Button {
 
   //instance variables
-  float x, y, w, h;
+  float x, y;
+  int w, h;
   boolean clicked;
   color highlight, normal;
   String text;
+  PImage image;
 
   //constructor
-  Button(String t, float _x, float _y, float _w, float _h, color norm, color high) {
+  Button(String t, float _x, float _y, int _w, int _h, color norm, color high) {
     x = _x;
     y = _y;
     w = _w;
     h = _h;
     text = t;
+    highlight = high;
+    normal = norm;
+    clicked = false;
+  }
+
+  Button(PImage i, float _x, float _y, int _w, int _h, color norm, color high) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    image = i;
     highlight = high;
     normal = norm;
     clicked = false;
@@ -30,7 +43,7 @@ class Button {
   void show() {
     drawRect();
     drawLabel();
-    checkClicked();
+    checkForClick();
   }
 
   void drawRect() {
@@ -50,11 +63,16 @@ class Button {
     } else {
       fill(highlight);
     }
-    textSize(w/4);
-    text(text, x, y);
+    if (image == null) {
+      textSize(w/4);
+      text(text, x, y);
+    } else {
+      image.resize(w/2, h/2);
+      image(image, x, y);
+    }
   }
 
-  void checkClicked() {
+  void checkForClick() {
     if (mouseReleased && touchingMouse()) {
       clicked = true;
     } else {
